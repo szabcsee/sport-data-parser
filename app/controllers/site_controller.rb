@@ -1,7 +1,6 @@
 #app/controllers/site_controller.rb
 
-
-class SiteController < ApplicationController
+class SiteController < ActionController::Base
   def index
 
   end

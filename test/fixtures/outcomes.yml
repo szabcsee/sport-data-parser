@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 
+  market_id: 
+  description: MyText
+
+two:
+  id: 
+  market_id: 
+  description: MyText
