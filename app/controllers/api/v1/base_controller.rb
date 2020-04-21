@@ -7,10 +7,10 @@ class Api::V1::BaseController < ApplicationController
 
   private
 
-  # @param data ApplicationRecord
   def prepare_response_data(objects)
-    if objects.first.include? :pos
-      objects.sort_by(&:pos)
+    objects = [objects] unless objects.is_a?(Array)
+    if objects.first.has_attribute?(:position)
+      objects.sort_by(&:position)
     end
     [data: objects]
   end
@@ -18,8 +18,10 @@ class Api::V1::BaseController < ApplicationController
   def load_data_service
     begin
       @sports_data_service = SportsDataService.new
-    rescue Exceptions
-      respond_with [error: 'This service can not be used from your country', status: 403], status: 403
+    rescue Exceptions::CountryNotAllowed
+      render :json => {error: 'This service can not be used from your country', status: :forbidden}, :status => :forbidden
+    rescue Exceptions::RequestTimeout
+      render :json => {error: 'The remote server is busy, the request has timed out.', status: :gateway_timeout}, :status => :gateway_timeout
     end
   end
 end
