@@ -1,8 +1,8 @@
 class OutcomesController < Api::V1::BaseController
-  before_action :load_data_service
 
-  def get_all_outcomes_by_event id
-
+  def get_all_outcomes_by_event
+    @outcomes = @sports_data_service.get_outcomes_data_by_event_id(params['id'].to_i)
+    respond_with prepare_response_data(@outcomes)
   end
 
   private
@@ -11,7 +11,4 @@ class OutcomesController < Api::V1::BaseController
     params.require(:outcome).permit(:id, :market_id, :description)
   end
 
-  def load_data_service
-    @sports_data_service = SportsDataService.new
-  end
 end
