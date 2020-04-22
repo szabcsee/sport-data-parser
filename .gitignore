@@ -70,3 +70,4 @@ yarn-debug.log*
 /config/master.key
 .idea
 yarn.lock
+.DS_Store

@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
+import classNames from 'classnames';
+import logo from './logo.svg';
+import {AppTopbar} from './common/layout/components/AppTopbar';
+import {AppFooter} from './common/layout/components/AppFooter';
+import {AppMenu} from './common/layout/components/AppMenu';
+import {Dashboard} from './common/layout/components/Dashboard';
+import './assets/css/App.css';
+import './assets/css/layout/layout.scss';
 import 'primereact/resources/themes/nova-colored/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -71,7 +79,12 @@ class App extends Component {
 
     createMenu() {
         this.menu = [
-
+            {
+                label: 'Sports', icon: 'pi pi-fw pi-calendar-times',
+                items: [
+                    {label: 'Empty Page', icon: 'pi pi-fw pi-circle-off', to: '/empty'}
+                ]
+            },
         ]
     }
 

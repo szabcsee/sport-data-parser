@@ -1,0 +1,17 @@
+.layout-footer {
+    @include transition(margin-left $transitionDuration);
+    background-color: $footerBgColor;
+    height: 52px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+
+    img {
+        vertical-align: middle;
+    }
+
+    .footer-text {
+        vertical-align: middle;
+    }
+}
