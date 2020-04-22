@@ -1,0 +1,28 @@
+{
+  "name": "betvictor_rails_react",
+  "version": "1.0.0",
+  "description": "Betvictor React and Rails integration",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd client && yarn start",
+    "build": "cd client && yarn build",
+    "install": "cd client && yarn"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/szabcsee/betvictor_test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/szabcsee/betvictor_test/issues"
+  },
+  "homepage": "https://github.com/szabcsee/betvictor_test#readme"
+}

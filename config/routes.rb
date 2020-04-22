@@ -16,4 +16,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get '*path', to: 'site#index', constraints: lambda { |request|
+    !request.xhr? && request.format.html?
+  }
 end
