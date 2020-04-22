@@ -22,4 +22,5 @@ class Api::V1::BaseController < ApplicationController
       render :json => {error: 'The remote server is busy, the request has timed out.', status: :gateway_timeout, result: 'error'}, :status => :gateway_timeout
     end
   end
+
 end

@@ -1,4 +1,4 @@
-class Api::V1::EventsController < Api::V1::BaseController
+class Api::V1::EventsController < ActionController::API
 
   def get_all_events
     @events = @sports_data_service.get_all_events_data

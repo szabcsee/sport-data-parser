@@ -1,6 +1,11 @@
-class Api::V1::SportsController < Api::V1::BaseController
+class Api::V1::SportsController < ActionController::API
 
   def get_all_sports
+    adapter     = HttpartyAdapter.new
+    api_service = ApiService.new adapter
+    json_data   = api_service.get
+
+    parser = Parser.new
     @sports = @sports_data_service.get_all_sports_data
     render :json => prepare_response_data(@sports), :status => :ok
   end
