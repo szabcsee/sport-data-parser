@@ -1,7 +1,7 @@
 class SportsDataService
 
-  #JSON_DATA_URL = 'http://digitalyogis.com/gambling.json'
-  JSON_DATA_URL = 'https://m.betvictor.com/bv_in_play/v2/en-gb/1/mini_inplay.json'
+  JSON_DATA_URL = 'http://digitalyogis.com/gambling.json'
+  #JSON_DATA_URL = 'https://m.betvictor.com/bv_in_play/v2/en-gb/1/mini_inplay.json'
 
   def initialize
     @json_object = retrieve_json_data

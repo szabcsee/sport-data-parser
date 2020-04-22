@@ -8,6 +8,6 @@ export class Dashboard extends Component {
     }
 
     render() {
-        return (<h1>Hello World</h1>);
+        return (<h1>Welcome to the BetVictor Test Application</h1>);
     }
 }

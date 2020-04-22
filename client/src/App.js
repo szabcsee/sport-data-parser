@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import classNames from 'classnames';
 import logo from './logo.svg';
 import {AppTopbar} from './common/layout/components/AppTopbar';
 import {AppFooter} from './common/layout/components/AppFooter';
 import {AppMenu} from './common/layout/components/AppMenu';
 import {Dashboard} from './common/layout/components/Dashboard';
+import {SportsBoard} from './common/sports/components/SportsBoard';
 import './assets/css/App.css';
 import './assets/css/layout/layout.scss';
 import 'primereact/resources/themes/nova-colored/theme.css';
@@ -17,6 +18,9 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
+            sports: [],
+            menuItems: [],
+            errorMessage: '',
             layoutMode: 'static',
             layoutColorMode: 'dark',
             staticMenuInactive: false,
@@ -27,7 +31,25 @@ class App extends Component {
         this.onToggleMenu = this.onToggleMenu.bind(this);
         this.onSidebarClick = this.onSidebarClick.bind(this);
         this.onMenuItemClick = this.onMenuItemClick.bind(this);
-        this.createMenu();
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:3000/api/v1/sports/all.json')
+            .then(res => res.json())
+            .then((data) => {
+                if (data.result === 'error') {
+                    this.setError(data.message);
+                } else {
+                    this.setState({
+                        sports: data.items,
+                        errorMessage: ''
+                    });
+                }
+                this.addMenuItems();
+            })
+            .catch((e) => {
+                this.setError(e.message);
+            })
     }
 
     onWrapperClick(event) {
@@ -43,20 +65,17 @@ class App extends Component {
 
     onToggleMenu(event) {
         this.menuClick = true;
-
         if (this.isDesktop()) {
             if (this.state.layoutMode === 'overlay') {
                 this.setState({
                     overlayMenuActive: !this.state.overlayMenuActive
                 });
-            }
-            else if (this.state.layoutMode === 'static') {
+            } else if (this.state.layoutMode === 'static') {
                 this.setState({
                     staticMenuInactive: !this.state.staticMenuInactive
                 });
             }
-        }
-        else {
+        } else {
             const mobileMenuActive = this.state.mobileMenuActive;
             this.setState({
                 mobileMenuActive: !mobileMenuActive
@@ -71,24 +90,37 @@ class App extends Component {
     }
 
     onMenuItemClick(event) {
+
         this.setState({
             overlayMenuActive: false,
             mobileMenuActive: false
         })
     }
 
-    createMenu() {
-        this.menu = [
-            {
-                label: 'Sports', icon: 'pi pi-fw pi-calendar-times',
-                items: [
-                    {label: 'Empty Page', icon: 'pi pi-fw pi-circle-off', to: '/empty'}
-                ]
-            },
-        ]
+    addMenuItems() {
+        let menuItems = [];
+        this.state.sports.forEach(sportItem => {
+            menuItems.push({
+                label: sportItem.description,
+                icon: 'pi pi-fw pi-circle-off',
+                to: '/sports/' + sportItem.id
+            })
+        });
+        this.setState({
+            menuItems: [
+                {
+                    label: 'Sports', icon: 'pi pi-fw pi-calendar-times',
+                    items: menuItems
+                },
+            ]
+        });
     }
 
-
+    setError(message) {
+        this.setState({
+            errorMessage: message
+        })
+    }
 
     addClass(element, className) {
         if (element.classList)
@@ -136,16 +168,19 @@ class App extends Component {
 
                 <div ref={(el) => this.sidebar = el} className={sidebarClassName} onClick={this.onSidebarClick}>
                     <div className="layout-logo">
-                        <img alt="Logo" src={logo} />
+                        <img alt="Logo" src={logo}/>
                     </div>
-                    <AppMenu model={this.menu} onMenuItemClick={this.onMenuItemClick} />
+                    <AppMenu model={this.state.menuItems} onMenuItemClick={this.onMenuItemClick}/>
                 </div>
 
                 <div className="layout-main">
-                    <Route path="/" exact component={Dashboard} />
+                    <Switch>
+                        <Route path="/" exact component={Dashboard}/>
+                        <Route path="/sports/:id" component={SportsBoard}/>
+                    </Switch>
                 </div>
 
-                <AppFooter />
+                <AppFooter/>
 
                 <div className="layout-mask"></div>
             </div>
