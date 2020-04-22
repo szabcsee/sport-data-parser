@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import LoadSpinner from "../../shared/components/LoadSpinner";
+import {Accordion,AccordionTab} from 'primereact/accordion';
+import OutcomeList from "./OutcomeList";
 class EventsList extends Component {
 
     constructor() {
@@ -44,8 +46,7 @@ class EventsList extends Component {
     }
 
     renderEvents(items) {
-
-        return items.map((item, index) => <li><span>{item.description}</span></li>)
+        return items.map((item, index) => <AccordionTab id={item.id} header={item.description}><OutcomeList eventId={item.id}/></AccordionTab>)
     }
 
     render() {
@@ -53,9 +54,9 @@ class EventsList extends Component {
             return <LoadSpinner/>;
         else {
             return (
-                <ul>
-                    {this.renderEvents(this.state.events)}
-                </ul>
+                <Accordion activeIndex={this.state.activeIndex} onTabChange={(e) => this.setState({activeIndex: e.index})}>
+                {this.renderEvents(this.state.events)}
+                </Accordion>
             )
         }
     }
