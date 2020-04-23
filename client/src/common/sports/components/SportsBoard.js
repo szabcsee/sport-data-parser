@@ -27,7 +27,7 @@ export class SportsBoard extends Component {
             .then(res => res.json())
             .then((data) => {
                 if (data.result === 'error') {
-                    this.setError(data.message);
+                    this.showError(data.error);
                 } else {
                     this.setState({
                         sport: data.items[0],
@@ -49,5 +49,9 @@ export class SportsBoard extends Component {
                     <EventsList sportId={this.state.sport.id}/>
                 </div>
         );
+    }
+
+    showError(message) {
+        this.messages.show({closable: false, severity: 'error', summary: message, detail: message});
     }
 }
