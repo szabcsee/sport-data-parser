@@ -46,7 +46,7 @@ class EventsList extends Component {
     }
 
     renderEvents(items) {
-        return items.map((item, index) => <AccordionTab id={item.id} header={item.description}><OutcomeList eventId={item.id}/></AccordionTab>)
+        return items.map((item, index) => <AccordionTab key={item.id} header={item.description}><OutcomeList eventId={item.id}/></AccordionTab>)
     }
 
     render() {

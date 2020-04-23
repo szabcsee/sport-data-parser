@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import LoadSpinner from "../../shared/components/LoadSpinner";
 import EventsList from "./EventsList";
+import {Message} from "primereact/message";
 
 
 export class SportsBoard extends Component {
@@ -27,7 +28,7 @@ export class SportsBoard extends Component {
             .then(res => res.json())
             .then((data) => {
                 if (data.result === 'error') {
-                    this.showError(data.error);
+                    this.setError(data.error);
                 } else {
                     this.setState({
                         sport: data.items[0],
@@ -41,17 +42,21 @@ export class SportsBoard extends Component {
             })
     }
 
+    setError(message) {
+        this.setState({
+            errorMessage: message
+        })
+    }
+
     render() {
         return (this.state.isLoading ?
                 <LoadSpinner/> :
                 <div>
+                    {(this.state.errorMessage ? <Message severity="error" text={this.state.errorMessage}></Message> : '' )}
                     <h2>{this.state.sport.description}</h2>
+                    <h2>{this.props.test}</h2>
                     <EventsList sportId={this.state.sport.id}/>
                 </div>
         );
-    }
-
-    showError(message) {
-        this.messages.show({closable: false, severity: 'error', summary: message, detail: message});
     }
 }

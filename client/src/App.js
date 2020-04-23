@@ -12,6 +12,7 @@ import './assets/css/layout/layout.scss';
 import 'primereact/resources/themes/nova-colored/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import {Message} from 'primereact/message';
 
 class App extends Component {
 
@@ -25,7 +26,7 @@ class App extends Component {
             layoutColorMode: 'dark',
             staticMenuInactive: false,
             overlayMenuActive: false,
-            mobileMenuActive: false
+            mobileMenuActive: false,
         };
         this.onWrapperClick = this.onWrapperClick.bind(this);
         this.onToggleMenu = this.onToggleMenu.bind(this);
@@ -38,7 +39,8 @@ class App extends Component {
             .then(res => res.json())
             .then((data) => {
                 if (data.result === 'error') {
-                    this.setError(data.message);
+                    this.setError(data.error);
+                    debugger;
                 } else {
                     this.setState({
                         sports: data.items,
@@ -174,9 +176,10 @@ class App extends Component {
                 </div>
 
                 <div className="layout-main">
+                    {(this.state.errorMessage ? <Message severity="error" text={this.state.errorMessage}></Message> : '' )}
                     <Switch>
                         <Route path="/" exact component={Dashboard}/>
-                        <Route path="/sports/:id" component={SportsBoard}/>
+                        <Route path="/sports/:id" component={SportsBoard} />
                     </Switch>
                 </div>
 
