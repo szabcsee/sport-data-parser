@@ -4,7 +4,6 @@ class ApiService
   #API_URL = 'https://m.betvictor.com/bv_in_play/v2/en-gb/1/mini_inplay.json'
 
   def initialize http_client
-
     @http_client = http_client
   end
 
